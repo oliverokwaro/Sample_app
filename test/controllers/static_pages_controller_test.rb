@@ -27,5 +27,16 @@ end
     assert_select "title", "Contact | #{@base_title}"
     assert_select "h3", "Our Offices"
   end
+test "should get cv" do
+    get static_pages_cv_url
+    assert_response :success
+    assert_select "title", "#{@base_title}"
+    assert_select "h4", "ACADEMIC BACKGROUND"
+    assert_select "h4", "WORK EXPERIENCE"
+    assert_select "h4", "AWARDS"
+    assert_select "h4", "HOBBIES"
+    assert_select "h4", "REFEREES"
 
+
+  end
 end
