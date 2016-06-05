@@ -14,6 +14,8 @@ def logged_in?
 end 
  
  def log_out
- 	session_user = nil
+ 	session.delete(:user_id)
+ 	@current_user=nil
+ 
  end
 end
