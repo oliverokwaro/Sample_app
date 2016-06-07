@@ -32,5 +32,9 @@ end
 		def authenticated?(remember_token)
 			BCrypt::Password.new(remember_digest).is_password?(remember_token)
 		end
-end
+# Forgets a user
 
+	def forget
+		update_attribute(:remember_digest, nil)
+	end
+end
