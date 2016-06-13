@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 	has_many :microposts, dependent: :destroy
-	
-attr_accessor :remember_token
+attr_accessor :remember_token, :activation_token
+before_create :create_activation_digest
+
 
 	before_save { self.email = email.downcase }
 	validates :name, presence: true, length: { maximum: 50 }
@@ -44,4 +45,18 @@ end
 	def feed
 		Micropost.where("user_id= ?", id)
 	end
+
+
+
+private
+# Converts email to all users
+	def downcase_email
+		self.email =email.downcase
+	end
+
+# creates and assigns the activation token and digest
+	def create_activation_digest
+		self.activation_token = User.new_token
+		self.activation_token = User.digest(activation_token)
+end
 end
