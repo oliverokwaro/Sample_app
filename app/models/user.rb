@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	has_many :microposts, dependent: :destroy
-attr_accessor :remember_token, :activation_token
+attr_accessor :remember_token, :activation_token, :reset_token
 before_create :create_activation_digest
 
 
@@ -12,6 +12,7 @@ before_create :create_activation_digest
 					  uniqueness: { case_sensitive: false }
 has_secure_password
 validates :password, length: { minimum: 6 }, allow_blank: true 
+
 def User.digest(string)
 	cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
 												  BCrypt::Engine.cost
@@ -65,6 +66,20 @@ def send_activation_email
 UserMailer.account_activation(self).deliver_now
 end
 
+
+#Sets the password reset attributes
+
+def create_reset_digest
+	self.reset_token = User.new_token
+	update_attribute(:reset_digest, User.digest(reset_token))
+	update_attribute(:reset_sent_at, Time.zone.now)
+end
+
+# Send password reset email
+
+def send_password_reset_mail
+	UserMailer.password_reset(self).deliver_now
+end
 
 private
 # Converts email to all users
