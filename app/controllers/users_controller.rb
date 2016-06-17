@@ -53,7 +53,7 @@ end
 
 def following
   @title = "Following"
-  @user = user.find(params[:id]
+  @user = user.find(params[:id])
   @users = @user.following.paginate(page: params[:page])
   render 'show/follow'
 end
