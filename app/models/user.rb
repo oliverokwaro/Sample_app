@@ -44,8 +44,10 @@ end
 
 
 # Returns true if the given token matches the digest.
-	def authenticated?(remember_token)
-			BCrypt::Password.new(remember_digest).is_password?(remember_token)
+	def authenticated?(attribute, token)
+		digest = send("#{attribute}_digest")
+		return false if digest.nil?
+		BCrypt::Password.new(digest).is_password?(token)
 	end
 # Forgets a user
 
@@ -128,6 +130,6 @@ private
 # creates and assigns the activation token and digest
 	def create_activation_digest
 		self.activation_token = User.new_token
-		self.activation_token = User.digest(activation_token)
+		self.activation_digest = User.digest(activation_token)
 	end
 	end
