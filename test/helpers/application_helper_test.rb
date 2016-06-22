@@ -5,6 +5,7 @@ class ApplicationHelperTest < ActionView::TestCase
 assert_equal full_title,         "Ruby on Rails Tutorial Sample App"
 assert_equal full_title("Help"), "Help | Ruby on Rails Tutorial Sample App"
 end
+<<<<<<< HEAD
 end
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
